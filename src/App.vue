@@ -3,15 +3,16 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import LoginForm from './components/LoginForm.vue';
 import Navbar from './components/Navbar.vue';
+import UsersList from './components/UsersList.vue';
 
 const api = "https://factus-db-factus-db.up.railway.app/API.php";
-const data = ref([]);
+const users = ref([]);
 
 const getData = async () => {
   try {
     const response = await axios.get(api + "?opc=list");
-    data.value = response.data.data;
-    console.log(data.value);
+    users.value = response.data.data;
+    console.log(users.value);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -26,7 +27,6 @@ onMounted(() => {
   <Navbar />
   <LoginForm />
   <div>
-    <h1>Data from API:</h1>
-    <pre>{{ data }}</pre>
+    <UsersList :users="users" />
   </div>
 </template>

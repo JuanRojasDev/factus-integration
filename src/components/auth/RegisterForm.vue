@@ -6,15 +6,14 @@ import InputText from 'primevue/inputtext';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
 import FileUpload from 'primevue/fileupload';
-import { register } from '../../services/authService';
+import { register, login } from '../../services/authService';
 
 const emits = defineEmits(['close']);
 
-const username = ref('');
-const password = ref('');
-const email = ref('');
 const nombre = ref('');
 const apellidos = ref('');
+const email = ref('');
+const contrasena = ref('');
 const avatar = ref('');
 const successMessage = ref('');
 const errorMessage = ref('');
@@ -31,19 +30,34 @@ const predefinedAvatars = [
 
 const selectedAvatar = ref(predefinedAvatars[0]);
 
+const authenticateUser = async () => {
+  try {
+    await login(email.value, contrasena.value); // Cambiado de password a contrasena
+    emits('close');
+  } catch (error) {
+    errorMessage.value = 'Error en la autenticación. Intenta iniciar sesión manualmente.';
+  }
+};
+
 const handleRegister = async () => {
   errorMessage.value = '';
   successMessage.value = '';
+
+  if (!nombre.value || !apellidos.value || !contrasena.value || !email.value || !selectedAvatar.value) {
+    errorMessage.value = 'Todos los campos son obligatorios.';
+    return;
+  }
 
   try {
     const response = await register(
       nombre.value,
       apellidos.value,
+      contrasena.value, // Cambiado de password a contrasena
       email.value,
-      password.value,
-      avatar.value
+      selectedAvatar.value
     );
     successMessage.value = '¡Registro exitoso!';
+    await authenticateUser(); // Autenticar al usuario después del registro
   } catch (error) {
     errorMessage.value = 'Error en el registro. Verifica tus datos.';
   }
@@ -65,7 +79,6 @@ const handleAvatarUpload = (event: any) => {
 };
 
 const selectAvatar = (predefinedAvatar: string) => {
-  avatar.value = predefinedAvatar;
   selectedAvatar.value = predefinedAvatar;
   avatar.value = '';
 };
@@ -117,12 +130,12 @@ const previousStep = () => {
           </div>
 
           <div class="flex flex-column gap-2">
-            <label for="password">Contraseña</label>
+            <label for="contrasena">Contraseña</label> <!-- Cambiado de password a contrasena -->
             <InputGroup>
               <InputGroupAddon>
                 <i class="pi pi-lock"></i>
               </InputGroupAddon>
-              <InputText id="password" v-model="password" type="password" placeholder="Contraseña" />
+              <InputText id="contrasena" v-model="contrasena" type="password" placeholder="Contraseña" /> <!-- Cambiado de password a contrasena -->
             </InputGroup>
           </div>
 

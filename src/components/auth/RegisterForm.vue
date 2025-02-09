@@ -45,11 +45,14 @@ const handleRegister = async () => {
 
 const handleAvatarUpload = (event: any) => {
   const file = event.files[0];
+
+  if (!file) return;
+
   const reader = new FileReader();
   reader.onload = (e) => {
-    if (e.target) {
+    if (e.target && e.target.result) {
       avatar.value = e.target.result as string;
-      selectedAvatar.value = avatar.value;
+      selectedAvatar.value = avatar.value; 
     }
   };
   reader.readAsDataURL(file);
@@ -58,6 +61,8 @@ const handleAvatarUpload = (event: any) => {
 const selectAvatar = (predefinedAvatar: string) => {
   avatar.value = predefinedAvatar;
   selectedAvatar.value = predefinedAvatar;
+  // Borrar la imagen cargada
+  avatar.value = '';
 };
 
 const nextStep = () => {
@@ -75,35 +80,6 @@ const previousStep = () => {
     <div class="flex flex-wrap gap-4 justify-center">
       <form @submit.prevent="currentStep === 1 ? nextStep() : handleRegister()" class="form-container">
         <div v-if="currentStep === 1" class="step-1">
-          <div class="flex flex-column gap-2">
-            <label for="username">Username</label>
-            <InputGroup>
-              <InputGroupAddon>
-                <i class="pi pi-user"></i>
-              </InputGroupAddon>
-              <InputText id="username" v-model="username" placeholder="Username" />
-            </InputGroup>
-          </div>
-
-          <div class="flex flex-column gap-2">
-            <label for="password">Password</label>
-            <InputGroup>
-              <InputGroupAddon>
-                <i class="pi pi-lock"></i>
-              </InputGroupAddon>
-              <InputText id="password" v-model="password" type="password" placeholder="Password" />
-            </InputGroup>
-          </div>
-
-          <div class="flex flex-column gap-2">
-            <label for="email">Email</label>
-            <InputGroup>
-              <InputGroupAddon>
-                <i class="pi pi-envelope"></i>
-              </InputGroupAddon>
-              <InputText id="email" v-model="email" placeholder="Email" />
-            </InputGroup>
-          </div>
 
           <div class="flex flex-column gap-2">
             <label for="nombre">Nombre</label>
@@ -125,6 +101,26 @@ const previousStep = () => {
             </InputGroup>
           </div>
 
+          <div class="flex flex-column gap-2">
+            <label for="email">Email</label>
+            <InputGroup>
+              <InputGroupAddon>
+                <i class="pi pi-envelope"></i>
+              </InputGroupAddon>
+              <InputText id="email" v-model="email" placeholder="Email" />
+            </InputGroup>
+          </div>
+
+          <div class="flex flex-column gap-2">
+            <label for="password">Contraseña</label>
+            <InputGroup>
+              <InputGroupAddon>
+                <i class="pi pi-lock"></i>
+              </InputGroupAddon>
+              <InputText id="password" v-model="password" type="password" placeholder="Contraseña" />
+            </InputGroup>
+          </div>
+
           <Button type="submit" label="Siguiente" icon="pi pi-arrow-right" class="p-button-success mt-4" />
         </div>
 
@@ -139,8 +135,8 @@ const previousStep = () => {
                 <Avatar :image="predefinedAvatar" shape="circle" size="large" class="cursor-pointer" />
               </div>
             </div>
-            <FileUpload mode="basic" name="avatar" accept="image/*" customUpload :auto="true" @upload="handleAvatarUpload" />
-          </div>
+            <FileUpload mode="basic" name="avatar" accept="image/*" customUpload :auto="false" @select="handleAvatarUpload" />
+        </div>
 
           <div class="flex justify-between mt-4">
             <Button type="button" label="Anterior" icon="pi pi-arrow-left" class="p-button-secondary" @click="previousStep" />

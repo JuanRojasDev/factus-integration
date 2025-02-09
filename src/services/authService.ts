@@ -35,11 +35,15 @@ export const login = async (username: string, password: string) => {
 };
 
 // Función para registrar un nuevo usuario
-export const register = async (username: string, password: string) => {
+export const register = async (username: string, password: string, email: string, nombre: string, apellidos: string, avatar: string) => {
   try {
     const data = {
       username: username,
-      password: password
+      password: password,
+      email: email,
+      nombre: nombre,
+      apellidos: apellidos,
+      avatar: avatar
     };
 
     const response = await axios.post(REGISTER_URL, data, {

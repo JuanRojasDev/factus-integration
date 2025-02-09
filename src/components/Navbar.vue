@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card navbar">
     <Menubar :model="items">
       <template #start>
         <svg width="35" height="40" viewBox="0 0 35 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-8">
@@ -14,7 +14,7 @@
         </svg>
       </template>
       <template #item="{ item, props, hasSubmenu, root }">
-        <a v-ripple class="flex items-center" v-bind="props.action">
+        <a v-ripple class="text-sm/6 font-semibold flex items-center gap-1 text-primary" v-bind="props.action">
           <span>{{ item.label }}</span>
           <Badge v-if="item.badge" :class="{ 'ml-auto': !root, 'ml-2': root }" :value="item.badge" />
           <span v-if="item.shortcut" class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1">{{ item.shortcut }}</span>
@@ -66,3 +66,35 @@ const items = ref([
   }
 ]);
 </script>
+
+<style scoped>
+.navbar {
+  font-family: 'Public Sans', 'Public Sans Fallback: Arial', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 14px;
+}
+
+.text-primary {
+  color: var(--p-primary-color);
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-sm {
+  font-size: 875rem;
+  line-height: 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.gap-1 {
+  gap: 0.25rem;
+}
+</style>

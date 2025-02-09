@@ -204,6 +204,8 @@ const getSeverity = (status: string) => {
 }
 
 .card {
+  font-family: 'Public Sans', 'Public Sans Fallback: Arial', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-size: 14px;
   width: 1058px;
   height: 816px;
 }

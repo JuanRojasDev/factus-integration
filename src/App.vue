@@ -8,7 +8,7 @@ import UsersList from './components/UsersList.vue';
 
 const api = "https://factus-db-factus-db.up.railway.app/API.php";
 const users = ref([]);
-const showRegisterForm = ref(false); // Variable para controlar la visibilidad del formulario de registro
+const showRegisterForm = ref(false);
 
 const getData = async () => {
   try {

@@ -36,7 +36,13 @@ const handleRegister = async () => {
   successMessage.value = '';
 
   try {
-    const response = await register(username.value, password.value, email.value, nombre.value, apellidos.value, avatar.value);
+    const response = await register(
+      nombre.value,
+      apellidos.value,
+      email.value,
+      password.value,
+      avatar.value
+    );
     successMessage.value = '¡Registro exitoso!';
   } catch (error) {
     errorMessage.value = 'Error en el registro. Verifica tus datos.';
@@ -61,7 +67,6 @@ const handleAvatarUpload = (event: any) => {
 const selectAvatar = (predefinedAvatar: string) => {
   avatar.value = predefinedAvatar;
   selectedAvatar.value = predefinedAvatar;
-  // Borrar la imagen cargada
   avatar.value = '';
 };
 
@@ -136,7 +141,7 @@ const previousStep = () => {
               </div>
             </div>
             <FileUpload mode="basic" name="avatar" accept="image/*" customUpload :auto="false" @select="handleAvatarUpload" />
-        </div>
+          </div>
 
           <div class="flex justify-between mt-4">
             <Button type="button" label="Anterior" icon="pi pi-arrow-left" class="p-button-secondary" @click="previousStep" />

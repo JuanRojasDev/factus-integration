@@ -2,9 +2,8 @@ import axios from 'axios';
 import qs from 'qs';
 
 const API_URL = 'https://api.factus.com.co/oauth/token';
-const REGISTER_URL = 'https://api.factus.com.co/register'; // URL de registro
+const REGISTER_URL = 'https://factus-db-factus-db.up.railway.app/API.php?opc=create';
 
-// Función para obtener el token de autenticación
 export const login = async (username: string, password: string) => {
   try {
     const data = qs.stringify({
@@ -22,7 +21,7 @@ export const login = async (username: string, password: string) => {
       },
     });
 
-    return response.data; // Retorna el token
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       console.error('Error en la solicitud:', error.response.data);
@@ -34,15 +33,13 @@ export const login = async (username: string, password: string) => {
   }
 };
 
-// Función para registrar un nuevo usuario
-export const register = async (username: string, password: string, email: string, nombre: string, apellidos: string, avatar: string) => {
+export const register = async (nombre: string, apellidos: string, email: string, contrasena: string, avatar: string) => {
   try {
     const data = {
-      username: username,
-      password: password,
-      email: email,
       nombre: nombre,
       apellidos: apellidos,
+      email: email,
+      contrasena: contrasena,
       avatar: avatar
     };
 
@@ -53,7 +50,7 @@ export const register = async (username: string, password: string, email: string
       },
     });
 
-    return response.data; // Retorna la respuesta del registro
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
       console.error('Error en la solicitud:', error.response.data);

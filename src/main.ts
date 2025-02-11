@@ -10,6 +10,7 @@ import Column from 'primevue/column';
 import MultiSelect from 'primevue/multiselect';
 import Tag from 'primevue/tag';
 import Checkbox from 'primevue/checkbox';
+import Dropdown from 'primevue/dropdown';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 
@@ -29,5 +30,6 @@ app.component('Column', Column);
 app.component('MultiSelect', MultiSelect);
 app.component('Tag', Tag);
 app.component('Checkbox', Checkbox);
+app.component('Dropdown', Dropdown);
 
 app.mount('#app');
